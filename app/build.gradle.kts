@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    kotlin("plugin.serialization") version "2.4.21"
+
 }
 
 android {
@@ -41,4 +43,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
+    implementation(libs.gson)
+
+
 }
