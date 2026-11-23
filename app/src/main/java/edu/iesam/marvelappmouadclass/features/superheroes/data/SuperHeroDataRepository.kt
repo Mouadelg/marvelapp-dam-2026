@@ -1,5 +1,6 @@
 package edu.iesam.marvelappmouadclass.features.superheroes.data
 
+import edu.iesam.marvelappmouadclass.features.superheroes.data.remote.mock.SuperHeroMockRemoteDataSource
 import edu.iesam.marvelappmouadclass.features.superheroes.data.local.xml.SuperHeroXmlLocalDataSource
 import edu.iesam.marvelappmouadclass.features.superheroes.domain.SuperHero
 import edu.iesam.marvelappmouadclass.features.superheroes.domain.SuperHeroRepository
@@ -7,10 +8,17 @@ import edu.iesam.marvelappmouadclass.features.superheroes.domain.SuperHeroReposi
 /**
  * Clase encargada de gestionar la fuente de datos: xml, base de datos, API, etc.
  */
-class SuperHeroDataRepository(private val xmlLocalDataSource: SuperHeroXmlLocalDataSource) :
+class SuperHeroDataRepository(
+    private val xmlLocalDataSource: SuperHeroXmlLocalDataSource,
+    private val mockRemoteDataSource: SuperHeroMockRemoteDataSource ) :
     SuperHeroRepository {
 
     override fun getAll(): List<SuperHero> {
         return xmlLocalDataSource.findAll()
+    }
+
+    override fun update(superHero: SuperHero) {
+        xmlLocalDataSource.save(mockRemoteDataSource.obtainAll())
+        xmlLocalDataSource.update(superHero)
     }
 }
